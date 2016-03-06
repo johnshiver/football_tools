@@ -15,3 +15,11 @@ class Game(TimeStampedModel):
 
     def __repr__(self):
         return "Home: {} vs. Away: {}".format(self.home_team, self.away_team)
+
+    @property
+    def winner(self):
+        pass
+
+    @property
+    def loser(self):
+        pass
