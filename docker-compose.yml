@@ -10,7 +10,7 @@ web:
     - ./web:/usr/src/app
     - ./web/static:/usr/src/app/static
   env_file: .env
-  command: /usr/local/bin/gunicorn docker_django_starter.wsgi:application -w 2 -b :8000 --reload
+  command: /usr/local/bin/gunicorn football_tools.wsgi:application -w 2 -b :8000 --reload
 
 nginx:
   restart: always

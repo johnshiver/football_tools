@@ -39,6 +39,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
+FOOTBALL_TOOL_APPS = (
+    'core',
+)
+
+INSTALLED_APPS += FOOTBALL_TOOL_APPS
+
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -88,7 +94,7 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "{0}/{1}".format(os.environ.get('REDIS_URL', default="redis://127.0.0.1:6379"), 0),
+        "LOCATION": "{0}/{1}".format(os.environ.get('REDIS_URL'), 0),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "IGNORE_EXCEPTIONS": True,  # mimics memcache behavior.
@@ -115,3 +121,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Football Settings
+# ------------------------------------------------------
+
+SEASONS_SUPPORTED = [2013, 2014, 2015]
