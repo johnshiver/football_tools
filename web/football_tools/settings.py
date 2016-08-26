@@ -125,4 +125,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Football Settings
 # ------------------------------------------------------
 
-SEASONS_SUPPORTED = [2013, 2014, 2015]
+SEASONS_SUPPORTED = [(2013, 2013), (2014, 2014), (2015, 2015)]
