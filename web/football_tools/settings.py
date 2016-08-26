@@ -125,4 +125,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Football Settings
 # ------------------------------------------------------
 
-SEASONS_SUPPORTED = [(2013, 2013), (2014, 2014), (2015, 2015)]
+PASSING_TD_POINTS = 4
+PASSING_YD_POINTS = 0.2
+PASSING_INT_POINTS = -2
+RUSHING_TD_POINTS = 6
+RUSHING_YD_POINTS = 1
+RECEIVING_YD_POINTS = 1
+RECEIVING_TD_POINTS = 4
+RECEIVING_REC_POINTS = 0.5
+

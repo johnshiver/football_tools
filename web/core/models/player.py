@@ -13,12 +13,11 @@ class Player(TimeStampedModel):
         ("K", "K",)
     )
 
+    team = models.ForeignKey('core.Team', related_name='players')
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=50)
-    team = models.ForeignKey('core.Team', related_name='players')
     position = models.CharField(max_length=10, choices=POSITION_CHOICES)
     profile_url = models.CharField(max_length=250)
-
     # used by nflgame
     playerid = models.CharField(max_length=200)
 
