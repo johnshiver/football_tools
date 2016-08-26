@@ -22,8 +22,8 @@ class Player(TimeStampedModel):
     playerid = models.CharField(max_length=200)
 
     def __str__(self):
-        return "{} for {}".format(self.full_name,
-                                  self.team)
+        return "{} {}".format(self.position,
+                              self.full_name)
 
     @property
     def full_name(self):

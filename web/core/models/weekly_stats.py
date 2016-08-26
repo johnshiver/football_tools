@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import Settings
+from django.conf import settings
 
 from model_utils.models import TimeStampedModel
 
@@ -29,19 +29,21 @@ class WeeklyStats(TimeStampedModel):
     total_score = models.IntegerField(default=0)
 
     def __str__(self):
-        return "{} for {}".format(self.week, self.player)
+        return "{} for {}: score -> {}".format(self.week,
+                                               self.player,
+                                               self.total_score)
 
     def calc_total_score(self):
         """
         """
         total = 0
-        total += (Settings.RUSHING_TD_POINTS * self.rushing_tds)
-        total += (Settings.RUSHING_YD_POINTS * self.rushing_yds)
-        total += (Settings.PASSING_YD_POINTS * self.passings_yds)
-        total += (Settings.PASSING_TD_POINTS * self.passing_tds)
-        total += (Settings.PASSING_INT_POINTS * self.passing_ints)
-        total += (Settings.RECEIVING_YD_POINTS * self.receiving_yds)
-        total += (Settings.RECEIVING_TD_POINTS * self.receiving_tds)
-        total += (Settings.RECEIVING_REC_POINTS * self.receiving_rec)
+        total += (settings.RUSHING_TD_POINTS * self.rushing_tds)
+        total += (settings.RUSHING_YD_POINTS * self.rushing_yds)
+        total += (settings.PASSING_YD_POINTS * self.passing_yds)
+        total += (settings.PASSING_TD_POINTS * self.passing_tds)
+        total += (settings.PASSING_INT_POINTS * self.passing_ints)
+        total += (settings.RECEIVING_YD_POINTS * self.receiving_yds)
+        total += (settings.RECEIVING_TD_POINTS * self.receiving_tds)
+        total += (settings.RECEIVING_REC_POINTS * self.receiving_rec)
 
         return total

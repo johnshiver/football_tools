@@ -9,24 +9,27 @@ class Week(TimeStampedModel):
 
     def __str__(self):
         return "{}: Week {}".format(self.season, self.number)
-    
-    def top_rushers(limit=5):
-        """
-        """
-        if not limit:
-            limit = -1
-        self.weekly_stats.all().order_by('-rushing_yds')[:limit]
 
-    def top_passer(limit=5):
-        """
-        """
-        if not limit:
-            limit = -1
-        self.weekly_stats.all().order_by('-passing_yds')[:limit]
+    def top_scorers(self, limit=10):
+        return self.weekly_stats.all().order_by('-total_score')[:limit]
 
-    def top_receivers(limit=5):
+    def top_rushers(self, limit=5):
         """
         """
         if not limit:
             limit = -1
-        self.weekly_stats.all().order_by('-rushing_yds')[:limit]
+        return self.weekly_stats.all().order_by('rushing_yds')[:limit]
+
+    def top_passer(self, limit=5):
+        """
+        """
+        if not limit:
+            limit = -1
+        return self.weekly_stats.all().order_by('-passing_yds')[:limit]
+
+    def top_receivers(self, limit=5):
+        """
+        """
+        if not limit:
+            limit = -1
+        return self.weekly_stats.all().order_by('-receiving_yds')[:limit]

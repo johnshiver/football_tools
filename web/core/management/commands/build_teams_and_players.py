@@ -40,7 +40,7 @@ def build_weekly_stats(season=2015, week=1):
     errors = 0
     new_week, _ = Week.objects.get_or_create(season=season,
                                              number=week)
-
+    print "..filling in data for {}".format(new_week)
     games = nflgame.games(season.year, week=week)
     players = nflgame.combine_game_stats(games)
 
@@ -57,12 +57,11 @@ def build_weekly_stats(season=2015, week=1):
                                                                week=new_week)
             # qb stats
             weekly_stat.passing_attempts = p.passing_attempts
-            weekly_stat.passing_cmps = p.passing_cmps
-            weekly_stat.passing_yrds = p.passing_yrds
+            weekly_stat.passing_cmps = p.passing_cmp
+            weekly_stat.passing_yds = p.passing_yds
             weekly_stat.passing_tds = p.passing_tds
             weekly_stat.passing_ints = p.passing_ints
             weekly_stat.save()
-
     # rushing stats
     for p in players.rushing().sort('rushing_yds').limit(100):
         try:
@@ -74,9 +73,8 @@ def build_weekly_stats(season=2015, week=1):
             weekly_stat, _ = WeeklyStats.objects.get_or_create(player=db_player,
                                                                season=season,
                                                                week=new_week)
-
-            weekly_stat.rushing_yrds = p.rushing_yrds
-            weekly_stat.rushing_atts = p.rushing_atts
+            weekly_stat.rushing_yds = p.rushing_yds
+            weekly_stat.rushing_atts = p.rushing_att
             weekly_stat.rushing_tds = p.rushing_tds
             weekly_stat.save()
 
@@ -92,7 +90,7 @@ def build_weekly_stats(season=2015, week=1):
                                                                week=new_week)
             # rec stats
             weekly_stat.receiving_rec = p.receiving_rec
-            weekly_stat.receiving_yrds = p.receiving_yrds
+            weekly_stat.receiving_yds = p.receiving_yrds
             weekly_stat.receiving_tds = p.receiving_tds
             weekly_stat.save()
 
@@ -101,8 +99,8 @@ class Command(BaseCommand):
     help = 'used to rebuild accounts from csv file'
 
     def handle(self, *args, **options):
-        # build_teams()
-        # build_players()
+        build_teams()
+        build_players()
         season, _ = Season.objects.get_or_create(year=2015)
         for i in xrange(1, 17):
             build_weekly_stats(season=season, week=i)
