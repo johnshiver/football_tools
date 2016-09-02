@@ -8,7 +8,8 @@ class Team(TimeStampedModel):
     owner = models.ForeignKey('draft_bot.Owner')
     draft = models.ForeignKey('draft_bot.Draft')
     # TODO: should roster be a separate model?
-    players = models.ManyToManyField('core.Player')
+    players = models.ManyToManyField('core.Player',
+                                     related_name='fantasy_team')
 
     name = models.CharField(max_length=250)
 

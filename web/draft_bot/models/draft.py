@@ -10,7 +10,7 @@ class Draft(TimeStampedModel):
     season = models.ForeignKey('core.Season')
     league = models.ForeignKey('draft_bot.League')
 
-    available_players = models.ManyToManyField('core.Players')
+    available_players = models.ManyToManyField('core.Player')
 
     def __str__(self):
         return "{} -> {}".format(self.season, self.league)
