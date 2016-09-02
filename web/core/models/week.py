@@ -8,7 +8,7 @@ class Week(TimeStampedModel):
     number = models.SmallIntegerField()
 
     def __str__(self):
-        return "{}: Week {}".format(self.season, self.number)
+        return "Week {}".format(self.number)
 
     def top_scorers(self, limit=10):
         return self.weekly_stats.all().order_by('-total_score')[:limit]

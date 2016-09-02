@@ -90,7 +90,7 @@ def build_weekly_stats(season=2015, week=1):
                                                                week=new_week)
             # rec stats
             weekly_stat.receiving_rec = p.receiving_rec
-            weekly_stat.receiving_yds = p.receiving_yrds
+            weekly_stat.receiving_yds = p.receiving_yds
             weekly_stat.receiving_tds = p.receiving_tds
             weekly_stat.save()
 
