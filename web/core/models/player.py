@@ -21,9 +21,16 @@ class Player(TimeStampedModel):
     # used by nflgame
     playerid = models.CharField(max_length=200)
 
+    # ranking
+    avg_adp = models.DecimalField(max_digits=30,
+                                  decimal_places=15,
+                                  null=True)
+    std_dev = models.DecimalField(max_digits=30,
+                                  decimal_places=15,
+                                  null=True)
+
     def __str__(self):
-        return "{} {}".format(self.position,
-                              self.full_name)
+        return self.full_name
 
     @property
     def full_name(self):

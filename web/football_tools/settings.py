@@ -41,6 +41,7 @@ INSTALLED_APPS = (
 
 FOOTBALL_TOOL_APPS = (
     'core',
+    'draft_bot'
 )
 
 INSTALLED_APPS += FOOTBALL_TOOL_APPS
