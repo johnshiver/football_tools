@@ -41,7 +41,7 @@ jdcal==1.2
 Jinja2==2.8
 kombu==3.0.33
 MarkupSafe==0.23
-nflgame==1.2.19
+nflgame
 oauthlib==1.0.3
 openpyxl==2.3.5
 path.py==8.1.2

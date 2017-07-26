@@ -1,3 +1,5 @@
+import sys
+
 from django.core.management.base import BaseCommand, CommandError
 
 import nflgame
@@ -30,7 +32,7 @@ def build_players():
                                                 profile_url=p.profile_url,
                                                 playerid=p.playerid
             )
-            print p
+            print(p)
 
     print errors
     print Player.objects.all().count()
@@ -99,8 +101,10 @@ class Command(BaseCommand):
     help = 'used to rebuild accounts from csv file'
 
     def handle(self, *args, **options):
+
         build_teams()
         build_players()
-        season, _ = Season.objects.get_or_create(year=2015)
+        season, _ = Season.objects.get_or_create(year=2016)
         for i in xrange(1, 17):
             build_weekly_stats(season=season, week=i)
+

@@ -9,8 +9,4 @@ class Round(TimeStampedModel):
 
     def make_pick(self, player, team):
         """
-
-        :param player:
-        :param team:
-        :return:
         """

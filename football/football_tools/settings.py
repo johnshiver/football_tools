@@ -24,9 +24,7 @@ SECRET_KEY = 'z!=tm!f=&&fqhjt6n4%2kt^2tk-d0(3b9@n=!v$)$eq%7203%d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -107,13 +105,9 @@ CACHES = {
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -123,15 +117,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# Football Settings
+
+# ------------------------------------------------------
+# Fantasy Football Point Settings
 # ------------------------------------------------------
 
 PASSING_TD_POINTS = 4
-PASSING_YD_POINTS = 1.0/25
+PASSING_YD_POINTS = 1.0 / 25
 PASSING_INT_POINTS = -2
 RUSHING_TD_POINTS = 6
-RUSHING_YD_POINTS = 1.0/10
-RECEIVING_YD_POINTS = 1.0/10
+RUSHING_YD_POINTS = 1.0 / 10
+RECEIVING_YD_POINTS = 1.0 / 10
 RECEIVING_TD_POINTS = 6
 RECEIVING_REC_POINTS = 0.5
-

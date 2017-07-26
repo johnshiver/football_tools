@@ -1,14 +1,14 @@
-web:
+football:
   restart: always
-  build: ./web
+  build: ./football
   expose:
     - "8000"
   links:
     - postgres:postgres
     - redis:redis
   volumes:
-    - ./web:/usr/src/app
-    - ./web/static:/usr/src/app/static
+    - ./football:/usr/src/app
+    - ./football/static:/usr/src/app/static
   env_file: .env
   command: /usr/local/bin/gunicorn football_tools.wsgi:application -w 2 -b :8000 --reload
 
@@ -16,13 +16,13 @@ nginx:
   restart: always
   build: ./nginx/
   ports:
-    - "81:80"
+    - "82:80"
   volumes:
     - /www/static
   volumes_from:
-    - web
+    - football
   links:
-    - web:web
+    - football:football
 
 postgres:
   restart: always
@@ -30,13 +30,13 @@ postgres:
   volumes_from:
     - data
   ports:
-    - "5435:5435"
+    - "5435:5432"
 
 redis:
   restart: always
   image: redis:latest
   ports:
-    - "6380:6380"
+    - "6381:6381"
 
 data:
   restart: always

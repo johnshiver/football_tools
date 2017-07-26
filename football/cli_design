@@ -1,0 +1,62 @@
+### CALCULATE PLAYER SCORE ###
+
+What to include?
+
+last years point total
+weight the last 8 games slightly for this total (1.1) (worth tweaking this)
+
+# somehow normalize for TD points, they require a bit of luck / greatly increase point totals
+# (think, critical hit % that can be highly variable) i think i care more about
+# this for wr / te / rb than qb
+# prefer players who have proven they can score tds, but get efficient
+# production
+
+
+pnt production variance: give slight weight to lower standard deviation for pnts / game (see what this is!)
+injury: give deduction for injury (injury status should be on gradient 1-3 perhaps)
+age: give bump or deduction for age (depending on position)
+   rb: under 27, bump; over 27 deduction, over 30, significant deduction
+   wr: under 24, slight deduction, 24-31 slight bump, over 31 deduction, over 34, significant deduction
+   qb: under 25, slight deduction.  25-35 slight bump, over 35 deduction
+   te: for now, same as
+
+strength of schedule: ignore because i dont think you'll know how strong
+                      schedule actually is until the season starts
+
+bye weeks: going to ignore, id rather lose 1 week than lose out on
+           players i want for a whole season.  will re-visit this
+           next year
+
+
+### COMMANDS ####
+
+create_draft
+
+  enter teams: (space deliminted; store in an array for now...maybe periodically save the teams to disk)
+  enter keepers: (loop over teams, ask for inputs.  do a fuzzy search on player name and confirm player.
+                  if for some reason the player isnt in the database, enter in position + name as place holder)
+
+  ### idea: do i need to worry about other teams to write an optimal algorithm?
+      i.e. is a player's value affected by what other teams COULD choose
+      the answer is clearly yes, but the question is how big is the difference
+
+
+ # menu while waiting to enter a pick
+ 1. display team roster (take input)
+ 2. display my roster
+ 3. display top available picks
+ 4. make pick (takes team + player)
+ 5. delete pick (takes team, then lets you select player. should update status)
+
+
+show_top_players
+  takes optional input (rb / wr / qb / te / def)
+  otherwise just displays top 10 available players by
+
+reset_player_draft_status
+  in current draft, players should be marked as available / unavailable
+  this will make everyone available
+
+mark_injuries
+
+reset_injuries
