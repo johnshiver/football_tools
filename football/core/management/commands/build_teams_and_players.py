@@ -50,7 +50,9 @@ def build_weekly_stats(season=2015, week=1):
     for p in players.passing().sort('passing_yds').limit(30):
         try:
             db_player = Player.objects.get(playerid=p.playerid)
-        except Player.DoesNotExist:
+        #except Player.DoesNotExist:
+        except Exception as e:
+            print(e)
             errors += 1
             continue
         else:
@@ -104,7 +106,11 @@ class Command(BaseCommand):
 
         build_teams()
         build_players()
+        for player in Player.objects.all():
+            player.calculate_age(players=nflgame.players)
         season, _ = Season.objects.get_or_create(year=2016)
+
+
         for i in xrange(1, 17):
             build_weekly_stats(season=season, week=i)
 

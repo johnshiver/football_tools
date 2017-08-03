@@ -34,8 +34,6 @@ class WeeklyStats(TimeStampedModel):
                                                self.total_score)
 
     def calc_total_score(self):
-        """
-        """
         total = 0
         total += (settings.RUSHING_TD_POINTS * self.rushing_tds)
         total += (settings.RUSHING_YD_POINTS * self.rushing_yds)
