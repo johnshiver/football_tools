@@ -130,3 +130,28 @@ RUSHING_YD_POINTS = 1.0 / 10
 RECEIVING_YD_POINTS = 1.0 / 10
 RECEIVING_TD_POINTS = 6
 RECEIVING_REC_POINTS = 0.5
+
+# ------------------------------------------------------
+# League / Rosters
+# ------------------------------------------------------
+
+from collections import namedtuple
+
+LeagueConfig = namedtuple('LeagueConfig', ['draft_position', 'keepers'])
+# dont want to use actual model here, just something easy to set up in settings
+Keeper = namedtuple('Keeper', ['name', 'playerid'])
+
+LEAGUE_SETTINGS = {
+    "Chris": LeagueConfig(1, []),
+    "John": LeagueConfig(2, []),
+    "Andy": LeagueConfig(3, []),
+    "Tara": LeagueConfig(4, []),
+    "Dan": LeagueConfig(5, []),
+    "Jason": LeagueConfig(6, []),
+    "Finck": LeagueConfig(7, []),
+    "Jim": LeagueConfig(8, []),
+    "Harry": LeagueConfig(9, []),
+    "Brad": LeagueConfig(10, []),
+    "Anthony": LeagueConfig(11, []),
+    "Megan": LeagueConfig(12, []),
+}

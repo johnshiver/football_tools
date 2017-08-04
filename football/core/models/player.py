@@ -32,7 +32,6 @@ class Player(TimeStampedModel):
     first_half_pts = models.SmallIntegerField(null=True)
     second_half_pts = models.SmallIntegerField(null=True)
 
-    # ranking
     draft_bot_score = models.DecimalField(max_digits=30,
                                           decimal_places=15,
                                           null=True)
@@ -47,10 +46,7 @@ class Player(TimeStampedModel):
 
     def calculate_age(self, players=None, recalc=False):
         """
-        TODO:
-        Optionally pass in players. Im not entirely sure, but I think this
-        means we could pass in the same players object if im iteratively
-        calculating age.  We'll see.
+        Optionally pass in players, seems better than importing everytime.
         """
         if not self.age or self.recalc:
             if not players:
@@ -106,33 +102,65 @@ class Player(TimeStampedModel):
         if self.first_half_pts and self.second_half_pts == 0:
             draft_bot_pts -= 25
 
+
+        # yikes this is ugly
+        # draft point adjustments based on position / age
         if self.position == "RB":
+
+            # MAX_DRAFT_PENALTY: 20
+
+            # young dudes run faster
             if self.age <= 27:
                 draft_bot_pts += 20
+            # old dudes do not
             elif self.age > 30:
                 draft_bot_pts -= 20
             else:
                 draft_bot_pts -= 5
+
+
         elif self.position == "WR":
+            # MAX_DRAFT_PENALTY: 15
+
+            # young wrs not quite as good
+            # if they showed no production, give a stronger penalty
             if self.age < 25:
                 if self.total_pts < 50:
                     draft_bot_pts -= 10
                 else:
                     draft_bot_pts -= 5
+
+            # these seem like prime years
             elif 24 < self.age < 31:
                 draft_bot_pts += 15
+
+            # early 30s still pretty decent
             elif 30 < self.age < 34:
                 draft_bot_pts += 5
+
+            # old dudes bad
             else:
                 draft_bot_pts -= 15
 
+
         elif self.position == "QB":
+            # MAX_DRAFT_PENALTY: 15
+            # TODO: this should likely be higher
+
+            # young qbs, not as consistent?
+            # only penalty if they didnt do great prior season
             if self.age < 25 and self.total_pts < 100:
                 draft_bot_pts -= 15
+
+            # prime years, get a boost
             elif 24 < self.age < 36:
                 draft_bot_pts += 15
+
+            # really old dudes are bad
             else:
                 draft_bot_pts -= 15
+
+
         elif self.position == "TE":
             if self.age < 25:
                 if self.total_pts < 50:

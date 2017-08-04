@@ -2,12 +2,13 @@ from django.db import models
 
 from model_utils.models import TimeStampedModel
 
+from core.models import Player
+
 
 class Team(TimeStampedModel):
 
-    owner = models.ForeignKey('draft_bot.Owner')
+    owner = models.CharField(max_length=250)
     draft = models.ForeignKey('draft_bot.Draft')
-    # TODO: should roster be a separate model?
     players = models.ManyToManyField('core.Player',
                                      related_name='fantasy_team')
 
@@ -17,16 +18,17 @@ class Team(TimeStampedModel):
         return "{}'s {}".format(self.owner,
                                 self.name)
 
-    def save(self, force_insert=False,
-             force_update=False, using=None,
-             update_fields=None):
-
-        # TODO: Validate team roster on save
-
-        super(Team, self).save(force_insert,
-                               force_update,
-                               using,
-                               update_fields)
+    def add_player(self, player_id):
+        try:
+            player = Player.objects.get(playerid=player_id)
+        except Player.DoesNotExist:
+            print("{} doesnt exist in db!")
+        else:
+            if player not in self.draft.available_players.all():
+                print("{} has already been selected! try again".format(player))
+                return
+            self.players.add(player)
+            self.draft.available_players.remove(player)
 
     def show_roster(self):
         qbs = self.players.filter(postion='QB')
@@ -48,4 +50,4 @@ class Team(TimeStampedModel):
         for wr in wrs:
             final_string += "{}\n".format(wr.full_name)
 
-        return final_string
+        print(final_string)
