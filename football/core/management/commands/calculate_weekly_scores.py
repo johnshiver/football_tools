@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from ...models import WeeklyStats
+from ...models import WeeklyStats, Player
 
 
 class Command(BaseCommand):
@@ -10,3 +10,5 @@ class Command(BaseCommand):
             stat.total_score = stat.calc_total_score()
             stat.save()
             print stat
+        for player in Player.objects.all():
+            player.calculate_draft_bot_score()

@@ -139,7 +139,7 @@ from collections import namedtuple
 
 LeagueConfig = namedtuple('LeagueConfig', ['draft_position', 'keepers'])
 # dont want to use actual model here, just something easy to set up in settings
-Keeper = namedtuple('Keeper', ['name', 'playerid'])
+Player = namedtuple('Player', ['name', 'playerid'])
 
 LEAGUE_SETTINGS = {
     "Chris": LeagueConfig(1, []),
@@ -155,3 +155,12 @@ LEAGUE_SETTINGS = {
     "Anthony": LeagueConfig(11, []),
     "Megan": LeagueConfig(12, []),
 }
+
+# will mark players as injuired when building new draft
+INJURIES = [
+
+]
+
+# give valued rookies a point boost
+GOOD_ROOKIES = [
+]
