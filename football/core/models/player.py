@@ -1,9 +1,10 @@
 from datetime import datetime
 
 from django.db import models
-import nflgame
 
+import nflgame
 from model_utils.models import TimeStampedModel
+from terminaltables import AsciiTable
 
 from .weekly_stats import WeeklyStats
 
@@ -39,6 +40,48 @@ class Player(TimeStampedModel):
 
     def __str__(self):
         return self.full_name
+
+    @classmethod
+    def calculate_all_bot_scores(cls):
+        """
+        Class method to recalculate all the player scores.  Makes
+        for nice reset.
+
+        TODO: should this be a querymanager method?
+        """
+        players = cls.objects.all()
+        for player in players:
+            player.calculate_draft_bot_score()
+
+
+    @classmethod
+    def show_top_players(cls, position="RB", toppers=10):
+        """
+        Displays top x players given position.
+        """
+        valid_positions = cls.POSITION_CHOICES
+        # reduce tuples to single element
+        valid_positions = map(lambda x: x[0], valid_positions)
+        if position not in valid_positions:
+            raise ValueError("{} must be one of {}".format(position,
+                                                           valid_positions))
+
+        table_data = [
+            ['Player', 'Position', 'Points'],
+        ]
+
+        players = Player.objects.all()
+        if position:
+            players = players.filter(position=position)
+        top_players = sorted(players, key=lambda x: x.draft_bot_score,
+                             reverse=True)
+        for player in top_players[:toppers]:
+            table_data.append([player.full_name, player.position,
+                               int(player.draft_bot_score)])
+
+        table = AsciiTable(table_data)
+        print(table.table)
+
 
     @property
     def full_name(self):
