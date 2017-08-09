@@ -8,11 +8,9 @@ from core.models import Player
 class Team(TimeStampedModel):
 
     owner = models.CharField(max_length=250)
-    draft = models.ForeignKey('draft_bot.Draft')
     players = models.ManyToManyField('core.Player',
                                      related_name='fantasy_team')
-
-    name = models.CharField(max_length=250)
+    draft_position = models.SmallIntegerField()
 
     def __str__(self):
         return "{}'s {}".format(self.owner,
@@ -29,6 +27,18 @@ class Team(TimeStampedModel):
                 return
             self.players.add(player)
             self.draft.available_players.remove(player)
+
+    def remove_player(self, player_id):
+        try:
+            player = Player.objects.get(playerid=player_id)
+        except Player.DoesNotExist:
+            print("{} doesnt exist in db!")
+        else:
+            if player not in self.players.all():
+                print("{} not on team!".format(player))
+                return
+            self.players.remove(player)
+            self.draft.available_players.add(player)
 
     def show_roster(self):
         qbs = self.players.filter(postion='QB')

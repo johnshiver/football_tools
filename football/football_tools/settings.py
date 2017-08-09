@@ -141,6 +141,8 @@ LeagueConfig = namedtuple('LeagueConfig', ['draft_position', 'keepers'])
 # dont want to use actual model here, just something easy to set up in settings
 Player = namedtuple('Player', ['name', 'playerid'])
 
+# I think keepers will just be strings...can look up the players later?
+# maybe player naed tuple is unnecessary
 LEAGUE_SETTINGS = {
     "Chris": LeagueConfig(1, []),
     "John": LeagueConfig(2, []),
@@ -156,11 +158,18 @@ LEAGUE_SETTINGS = {
     "Megan": LeagueConfig(12, []),
 }
 
+ROUNDS = 10
+
 # will mark players as injuired when building new draft
 INJURIES = [
 
 ]
 
 # give valued rookies a point boost
+GOOD_ROOKIE_BONUS = 25
 GOOD_ROOKIES = [
+]
+
+BREAKOUT_BONUS = 15
+BREAKOUT_PLAYERS = [
 ]
