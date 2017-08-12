@@ -22,6 +22,7 @@ class Player(TimeStampedModel):
     team = models.ForeignKey('core.Team', related_name='players')
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=75)
     position = models.CharField(max_length=10, choices=POSITION_CHOICES)
     profile_url = models.CharField(max_length=250)
     age = models.SmallIntegerField(null=True)
@@ -37,6 +38,18 @@ class Player(TimeStampedModel):
                                           decimal_places=15,
                                           null=True)
 
+    # ---     overrides        --- #
+
+    def save(self, *args, **kwargs):
+        """
+        Fill in full name if it's not there.
+        """
+        if not self.full_name:
+            self.full_name = "{} {}".format(self.first_name,
+                                            self.last_name)
+        super(Model, self).save(*args, **kwargs)
+
+    # --------------------------- #
 
     def __str__(self):
         return self.full_name
@@ -52,7 +65,6 @@ class Player(TimeStampedModel):
         players = cls.objects.all()
         for player in players:
             player.calculate_draft_bot_score()
-
 
     @classmethod
     def show_top_players(cls, position="RB", toppers=10):
@@ -81,11 +93,6 @@ class Player(TimeStampedModel):
 
         table = AsciiTable(table_data)
         print(table.table)
-
-
-    @property
-    def full_name(self):
-        return self.first_name + ' ' + self.last_name
 
     def calculate_age(self, players=None, recalc=False):
         """
@@ -145,7 +152,6 @@ class Player(TimeStampedModel):
         if self.first_half_pts and self.second_half_pts == 0:
             draft_bot_pts -= 25
 
-
         # yikes this is ugly
         # draft point adjustments based on position / age
         if self.position == "RB":
@@ -160,7 +166,6 @@ class Player(TimeStampedModel):
                 draft_bot_pts -= 20
             else:
                 draft_bot_pts -= 5
-
 
         elif self.position == "WR":
             # MAX_DRAFT_PENALTY: 15
@@ -185,7 +190,6 @@ class Player(TimeStampedModel):
             else:
                 draft_bot_pts -= 15
 
-
         elif self.position == "QB":
             # MAX_DRAFT_PENALTY: 15
             # TODO: this should likely be higher
@@ -202,7 +206,6 @@ class Player(TimeStampedModel):
             # really old dudes are bad
             else:
                 draft_bot_pts -= 15
-
 
         elif self.position == "TE":
             if self.age < 25:

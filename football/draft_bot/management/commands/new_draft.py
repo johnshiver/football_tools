@@ -13,10 +13,10 @@ class Command(BaseCommand):
     help = 'given leage settings defined settings.py create rosters'
 
     def handle(self, *args, **options):
-        new_draft = Draft.new_draft()
+        draft = Draft.new_draft()
 
         # create draft order
-        up_order = range(1, new_draft.teams.count()+1)
+        up_order = range(1, draft.teams.count()+1)
         down_order = up_order[::-1]
 
         rounds = settings.ROUNDS
@@ -29,6 +29,5 @@ class Command(BaseCommand):
 
         rounds = rounds[::-1]
         while rounds:
-            current_team = Team.objects.get(draft_position=rounds.pop())
-            Draft.make_pick()
+            draft.make_pick(draft_position=rounds.pop())
 

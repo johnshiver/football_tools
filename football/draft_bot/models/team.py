@@ -40,7 +40,7 @@ class Team(TimeStampedModel):
             self.players.remove(player)
             self.draft.available_players.add(player)
 
-    def show_roster(self):
+    def print_roster(self):
         qbs = self.players.filter(postion='QB')
         rbs = self.players.filter(postion='RB')
         wrs = self.players.filter(postion='WR')
