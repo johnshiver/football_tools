@@ -10,7 +10,7 @@ from core.models import Player
 
 
 class Command(BaseCommand):
-    help = 'given leage settings defined settings.py create rosters'
+    help = 'given league settings defined settings.py create rosters'
 
     def handle(self, *args, **options):
         draft = Draft.new_draft()
@@ -27,7 +27,9 @@ class Command(BaseCommand):
             draft_order.extend(down_order)
             rounds -= 2
 
-        rounds = rounds[::-1]
-        while rounds:
-            draft.make_pick(draft_position=rounds.pop())
+        try:
+            while draft_order:
+                draft.make_pick(draft_position=draft_order.pop())
+        except Exception as e:
+            print(e)
 

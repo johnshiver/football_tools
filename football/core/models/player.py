@@ -47,7 +47,7 @@ class Player(TimeStampedModel):
         if not self.full_name:
             self.full_name = "{} {}".format(self.first_name,
                                             self.last_name)
-        super(Model, self).save(*args, **kwargs)
+        super(TimeStampedModel, self).save(*args, **kwargs)
 
     # --------------------------- #
 
@@ -67,7 +67,7 @@ class Player(TimeStampedModel):
             player.calculate_draft_bot_score()
 
     @classmethod
-    def show_top_players(cls, position="RB", toppers=10):
+    def show_top_players(cls, position="RB", n=15):
         """
         Displays top x players given position.
         """
@@ -87,7 +87,7 @@ class Player(TimeStampedModel):
             players = players.filter(position=position)
         top_players = sorted(players, key=lambda x: x.draft_bot_score,
                              reverse=True)
-        for player in top_players[:toppers]:
+        for player in top_players[:n]:
             table_data.append([player.full_name, player.position,
                                int(player.draft_bot_score)])
 
